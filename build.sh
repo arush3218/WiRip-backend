@@ -6,9 +6,9 @@ pip install -r requirements.txt
 
 python manage.py collectstatic --no-input
 
-# Handle migrations with fallback strategy
+# Database migration handling with better error recovery
 echo "Running database migrations..."
-python manage.py migrate --fake-initial || python manage.py migrate
+python manage.py migrate --fake-initial || python manage.py migrate || (echo "Trying with fresh database..." && python manage.py migrate --run-syncdb)
 
 # Add a success message
 echo "Build completed successfully!"
